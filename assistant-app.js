@@ -2343,10 +2343,15 @@ class AssistantApp {
    * @return {(Object|null)} HTTP response.
    * @private
    */
-  doResponse_ (response, responseCode) {
+  doResponse_ (response, responseCode, expressResponse = null) {
     debug('doResponse_: response=%s, responseCode=%d', JSON.stringify(response), responseCode);
-    if (this.responded_) {
-      return;
+    // if (this.responded_) {
+      // return;
+    // }
+    if (expressResponse) {
+      this.response_ = expressResponse;
+      console.log("this.response: " + this.response_);
+      console.log("expressResponse" + expressResponse);
     }
     if (!response) {
       this.handleError_('Response can NOT be empty.');
@@ -2369,6 +2374,7 @@ class AssistantApp {
       }
     }
     debug('Response %s', JSON.stringify(response));
+    this.response_.send(response);
     const httpResponse = this.response_.status(code).send(response);
     this.responded_ = true;
     return httpResponse;

@@ -727,14 +727,14 @@ class DialogflowApp extends AssistantApp {
    * @return {(Object|null)} The response that is sent back to Assistant.
    * @dialogflow
    */
-  tell (speechResponse) {
+  tell (speechResponse, expressResponse) {
     debug('tell: speechResponse=%s', speechResponse);
     if (!speechResponse) {
       this.handleError_('Invalid speech response');
       return null;
     }
     const response = this.buildResponse_(speechResponse, false);
-    return this.doResponse_(response, RESPONSE_CODE_OK);
+    return this.doResponse_(response, RESPONSE_CODE_OK, expressResponse);
   }
 
   /**
